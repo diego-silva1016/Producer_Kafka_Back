@@ -1,4 +1,5 @@
 const express = require('express');
+const serveless = require('serverless-http');
 
 var cors = require('cors')
 
@@ -9,6 +10,10 @@ const app = express();
 app.use(express.json())
 
 app.use(cors())
+
+app.get('/teste', async (req,res) => { 
+   res.status(200).json({teste: 'funcionou'});
+ })
 
 app.post('/mesage', async (req,res) => {
  const {mesage} = req.body;
@@ -27,4 +32,4 @@ app.post('/mesage', async (req,res) => {
   res.status(200).send();
 })
 
-app.listen(3333)
+module.exports.handler = serveless(app)
